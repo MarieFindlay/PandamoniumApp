@@ -1,16 +1,10 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableWithoutFeedback,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Constants } from "expo";
-import { black } from "ansi-colors";
 
 import Card from "./Card";
+
+import { assetsObject } from "./assets";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,61 +12,19 @@ export default class App extends React.Component {
     this.state = {};
   }
   render() {
-    const pandaImg = "./../pandas_app/assets/pandaIcon.png";
-    const iceCreamImg = "./../pandas_app/assets/iceCreamIcon.png";
+    const pandaImg = assetsObject.pandaImg;
+    const iceCreamImg = assetsObject.iceCreamImg;
     return (
       <View style={styles.container}>
-        <Card />
-        <TouchableOpacity
-          style={styles.card}
-          activeOpacity={0}
-          onPress={() =>
-            this.setState({
-              cardFrontIsDisplayed: !this.state.cardFrontIsDisplayed
-            })
-          }
-        >
-          {this.state.cardFrontIsDisplayed ? (
-            <Image style={styles.image} source={require(pandaImg)} />
-          ) : (
-            <Image style={styles.image} source={require(iceCreamImg)} />
-          )}
-        </TouchableOpacity>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback>
-          <View style={styles.card}>
-            <Image style={styles.image} source={require(pandaImg)} />
-          </View>
-        </TouchableWithoutFeedback>
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
+        <Card backImg={iceCreamImg} />
       </View>
     );
   }
@@ -89,17 +41,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 10,
     paddingRight: 10
-  },
-  card: {
-    borderRadius: 5,
-    margin: 5,
-    padding: 6,
-    backgroundColor: "#faf8ee"
-  },
-  image: {
-    height: 60,
-    width: 60,
-    resizeMode: "contain",
-    marginLeft: 1.5
   }
 });
