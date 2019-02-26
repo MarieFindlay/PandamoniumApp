@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
 
-import { assetsObject } from "./assets";
+import { pandaImage, backImages } from "./assets";
 
 export default class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardFrontIsDisplayed: true
+      cardFrontIsDisplayed: false
     };
   }
   flipCard = () => {
@@ -15,18 +15,22 @@ export default class Card extends React.Component {
       cardFrontIsDisplayed: !this.state.cardFrontIsDisplayed
     });
   };
-  handleOnPress = () => {
+  componentDidMount = () => {
+    setTimeout(this.flipCard, 5000);
+  };
+  handleOnPress = id => {
     this.flipCard();
     setTimeout(this.flipCard, 500);
+    this.props.attemptMatch(id);
   };
   render() {
-    const pandaImg = assetsObject.pandaImg;
-    const { backImg } = this.props;
+    const pandaImg = pandaImage;
+    const { backImg, backImgId } = this.props;
     return (
       <TouchableOpacity
         style={styles.card}
         activeOpacity={0.8}
-        onPress={this.handleOnPress}
+        onPress={this.handleOnPress(backImgId)}
       >
         {this.state.cardFrontIsDisplayed ? (
           <Image style={styles.image} source={pandaImg} />
@@ -40,6 +44,7 @@ export default class Card extends React.Component {
 
 const styles = StyleSheet.create({
   card: {
+    width: 75,
     borderRadius: 5,
     margin: 5,
     padding: 6,

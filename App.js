@@ -1,45 +1,46 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Constants } from "expo";
 
-import Card from "./Card";
-
-import { assetsObject } from "./assets";
+import Game from "./Game";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      gameHasStarted: false
+    };
   }
+  handleStartOrEndGame = () => {
+    this.setState({ gameHasStarted: !this.state.gameHasStarted });
+  };
   render() {
-    const pandaImg = assetsObject.pandaImg;
-    const iceCreamImg = assetsObject.iceCreamImg;
-    return (
-      <View style={styles.container}>
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-        <Card backImg={iceCreamImg} />
-      </View>
-    );
+    if (!this.state.gameHasStarted) {
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={this.handleStartOrEndGame}
+            style={styles.textBox}
+          >
+            <Text>Start Game</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else return <Game handlePress={this.handleStartOrEndGame} />;
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight + 5,
     flexDirection: "row",
     flex: 1,
-    flexWrap: "wrap",
     backgroundColor: "#EE6146",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    paddingLeft: 10,
-    paddingRight: 10
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  textBox: {
+    backgroundColor: "#faf8ee",
+    padding: 10,
+    borderRadius: 5
   }
 });
