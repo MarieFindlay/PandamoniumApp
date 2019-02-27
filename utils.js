@@ -1,3 +1,5 @@
+import uuidv4 from "uuid/v4";
+
 export const getRandomElement = array => {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -13,6 +15,13 @@ export const shufflePandas = array => {
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
+  return array;
+};
+
+const assignUniqueId = array => {
+  array.forEach(item => {
+    item.uniqueId = uuidv4();
+  });
   return array;
 };
 

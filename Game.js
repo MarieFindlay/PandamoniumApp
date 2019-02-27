@@ -1,4 +1,7 @@
 import React from "react";
+
+import uuidv4 from "uuid/v4";
+
 import {
   StyleSheet,
   View,
@@ -18,11 +21,38 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pandasToDisplay: createPandaArray(4, backImages)
+      pandasToDisplay: createPandaArray(4, backImages),
+      lastTappedPanda: null,
+      matchedPandaKeys: []
     };
   }
-  attemptMatch = id => {
-    console.log(id);
+  attemptMatch = (currentIconId, currentKey) => {
+    const lastTappedPanda = this.state.lastTappedPanda;
+    if (lastTappedPanda === null) {
+      this.setState({
+        lastTappedPanda: {
+          iconId: currentIconId,
+          key: currentKey
+        }
+      });
+    } else {
+      if (
+        lastTappedPanda.iconId === currentIconId &&
+        lastTappedPanda.key !== currentKey
+      ) {
+        const newMatchedPandas = this.state.matchedPandaKeys;
+        newMatchedPandas.push(currentKey, lastTappedPanda.key);
+        this.setState({
+          matchedPandaKeys: newMatchedPandas
+        });
+      } else
+        this.setState({
+          lastTappedPanda: {
+            iconId: currentIconId,
+            key: currentKey
+          }
+        });
+    }
   };
   render() {
     const pandas = this.state.pandasToDisplay;
@@ -31,12 +61,13 @@ export default class Game extends React.Component {
         <FlatList
           contentContainerStyle={styles.container}
           data={pandas}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Card
-              key={pandas.indexOf(item)}
+              key={index}
               backImgId={item.id}
               backImg={item.path}
-              attemptMatch={this.attemptMatch}
+              attemptMatch={() => this.attemptMatch(item.id, index)}
+              hasMatched={this.state.matchedPandaKeys.includes(index)}
             />
           )}
         />
@@ -45,7 +76,7 @@ export default class Game extends React.Component {
             onPress={this.props.handlePress}
             style={styles.textBox}
           >
-            <Text>End Game</Text>
+            <Text style={styles.textBox}>End Game</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -63,5 +94,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 10,
     paddingRight: 10
+  },
+  textBox: {
+    backgroundColor: "#faf8ee",
+    padding: 5,
+    borderRadius: 5
   }
 });

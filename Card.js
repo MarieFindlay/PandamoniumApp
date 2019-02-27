@@ -18,19 +18,19 @@ export default class Card extends React.Component {
   componentDidMount = () => {
     setTimeout(this.flipCard, 5000);
   };
-  handleOnPress = id => {
+  handleOnPress = () => {
     this.flipCard();
     setTimeout(this.flipCard, 500);
-    this.props.attemptMatch(id);
+    this.props.attemptMatch();
   };
   render() {
     const pandaImg = pandaImage;
-    const { backImg, backImgId } = this.props;
+    const { backImg, backImgId, hasMatched } = this.props;
     return (
       <TouchableOpacity
-        style={styles.card}
+        style={!hasMatched ? styles.card : styles.cardMatched}
         activeOpacity={0.8}
-        onPress={this.handleOnPress(backImgId)}
+        onPress={this.handleOnPress}
       >
         {this.state.cardFrontIsDisplayed ? (
           <Image style={styles.image} source={pandaImg} />
@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 6,
     backgroundColor: "#faf8ee"
+  },
+  cardMatched: {
+    backgroundColor: "#EE6146"
   },
   image: {
     height: 60,
