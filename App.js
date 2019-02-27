@@ -8,10 +8,11 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameHasStarted: false
+      gameHasStarted: false,
+      lastResult: null
     };
   }
-  handleStartOrEndGame = () => {
+  handleStartOrEndGame = result => {
     this.setState({ gameHasStarted: !this.state.gameHasStarted });
   };
   render() {
@@ -26,7 +27,13 @@ export default class App extends React.Component {
           </TouchableOpacity>
         </View>
       );
-    } else return <Game handlePress={this.handleStartOrEndGame} />;
+    } else
+      return (
+        <>
+          <Game handlePress={this.handleStartOrEndGame} />
+          <Text>{this.state.lastResult}</Text>
+        </>
+      );
   }
 }
 const styles = StyleSheet.create({

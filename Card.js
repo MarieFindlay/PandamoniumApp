@@ -27,7 +27,6 @@ export default class Card extends React.Component {
   render() {
     const pandaImg = pandaImage;
     const { backImg, backImgId, uniqueId, matchedPandaKeys } = this.props;
-    console.log(uniqueId, matchedPandaKeys);
     return (
       <TouchableOpacity
         disabled={matchedPandaKeys.includes(uniqueId)}
