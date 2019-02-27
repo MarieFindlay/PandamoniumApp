@@ -43,19 +43,22 @@ export default class Game extends React.Component {
         const newMatchedPandas = this.state.matchedPandaKeys;
         newMatchedPandas.push(currentKey, lastTappedPanda.key);
         this.setState({
-          matchedPandaKeys: newMatchedPandas
+          matchedPandaKeys: newMatchedPandas,
+          lastTappedPanda: null
         });
-      } else
+      } else {
         this.setState({
           lastTappedPanda: {
             iconId: currentIconId,
             key: currentKey
           }
         });
+      }
     }
   };
   render() {
     const pandas = this.state.pandasToDisplay;
+    const matchedPandaKeys = this.state.matchedPandaKeys;
     return (
       <>
         <FlatList
@@ -67,7 +70,8 @@ export default class Game extends React.Component {
               backImgId={item.id}
               backImg={item.path}
               attemptMatch={() => this.attemptMatch(item.id, index)}
-              hasMatched={this.state.matchedPandaKeys.includes(index)}
+              matchedPandaKeys={matchedPandaKeys}
+              uniqueId={index}
             />
           )}
         />

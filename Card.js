@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
 
 import { pandaImage, backImages } from "./assets";
+import { red } from "ansi-colors";
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -25,10 +26,16 @@ export default class Card extends React.Component {
   };
   render() {
     const pandaImg = pandaImage;
-    const { backImg, backImgId, hasMatched } = this.props;
+    const { backImg, backImgId, uniqueId, matchedPandaKeys } = this.props;
+    console.log(uniqueId, matchedPandaKeys);
     return (
       <TouchableOpacity
-        style={!hasMatched ? styles.card : styles.cardMatched}
+        disabled={matchedPandaKeys.includes(uniqueId)}
+        style={
+          !matchedPandaKeys.includes(uniqueId)
+            ? styles.card
+            : styles.cardMatched
+        }
         activeOpacity={0.8}
         onPress={this.handleOnPress}
       >
@@ -51,6 +58,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#faf8ee"
   },
   cardMatched: {
+    width: 75,
+    borderRadius: 5,
+    margin: 5,
+    padding: 6,
     backgroundColor: "#EE6146"
   },
   image: {
